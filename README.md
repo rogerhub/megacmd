@@ -36,7 +36,7 @@ Megacmd is a command-line tool for performing file and directory transfer betwee
         megacmd [OPTIONS] sync /tmp/foo mega:/foo
 
     Options:
-        -config <file>         Config file path
+        -conf <file>           Config file path
         -force                 Force hard delete or overwrite
         -help                  Help
         -recursive             Recursive listing

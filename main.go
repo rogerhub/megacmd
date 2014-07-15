@@ -34,7 +34,7 @@ const USAGE = `
 `
 
 const USAGE_OPTIONS = `
-	-config <file>         Config file path
+	-conf <file>           Config file path
 	-force                 Force hard delete or overwrite
 	-help                  Help
 	-recursive             Recursive listing
