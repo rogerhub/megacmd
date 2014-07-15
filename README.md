@@ -35,13 +35,14 @@ Megacmd is a command-line tool for performing file and directory transfer betwee
         megacmd [OPTIONS] sync mega:/foo/ /tmp/foo/
         megacmd [OPTIONS] sync /tmp/foo mega:/foo
 
-      -conf="/Users/slakshman/.megacmd.json": Config file path
-      -force=false: Force hard delete or overwrite
-      -help=false: Help
-      -ignore-same-size=false: Consider files with same size and path suffix as same
-      -recursive=false: Recursive listing
-      -verbose=1: Verbose
-      -version=false: Version
+    Options:
+        -config <file>         Config file path
+        -force                 Force hard delete or overwrite
+        -help                  Help
+        -recursive             Recursive listing
+        -skip-same-size        Enables skipping based on file size
+        -verbose               Verbose
+        -version               Version
 
 ### How to obtain megacmd ?
 
@@ -74,7 +75,7 @@ Create a file ~/.megacmd.json with the following json:
         "DownloadWorkers" : 4,
         "UploadWorkers" : 4,
         "SkipSameSize" : true,
-        "Verbose" : 1
+        "Verbose" : true
     }
 
 DownloadWorkers and UploadWorkers specifies how many parallel connections should be used by megacmd.

@@ -35,7 +35,7 @@ type Config struct {
 	Recursive       bool
 	Force           bool
 	SkipSameSize    bool
-	Verbose         int
+	Verbose         bool
 }
 
 type Path struct {
@@ -51,6 +51,10 @@ func (p *Path) SetPrefix(s string) {
 }
 
 func (p Path) GetPath() string {
+	return path.Join(p.path...)
+}
+
+func (p Path) GetFullPath() string {
 	x := path.Join(p.path...)
 	x = path.Join(p.prefix, x)
 	if p.t == mega.FOLDER {
@@ -61,7 +65,7 @@ func (p Path) GetPath() string {
 }
 
 func (p Path) String() string {
-	return fmt.Sprintf("%-*s %-*d %s", PATH_WIDTH, p.GetPath(), SIZE_WIDTH, p.size, p.ts.Format(time.RFC3339))
+	return fmt.Sprintf("%-*s %-*d %s", PATH_WIDTH, p.GetFullPath(), SIZE_WIDTH, p.size, p.ts.Format(time.RFC3339))
 }
 
 const (
@@ -361,7 +365,7 @@ func (mc *MegaClient) Get(srcres, dstpath string) error {
 
 	var ch *chan int
 	var wg sync.WaitGroup
-	if mc.cfg.Verbose > 0 {
+	if mc.cfg.Verbose {
 		ch = new(chan int)
 		*ch = make(chan int)
 
@@ -473,7 +477,7 @@ func (mc *MegaClient) Put(srcpath, dstres string) error {
 
 	var ch *chan int
 	var wg sync.WaitGroup
-	if mc.cfg.Verbose > 0 {
+	if mc.cfg.Verbose {
 		ch = new(chan int)
 		*ch = make(chan int)
 		fi, err := os.Stat(srcpath)
@@ -590,12 +594,12 @@ func (mc *MegaClient) Sync(src, dst string) error {
 		}
 	}
 
-	if mc.cfg.Verbose > 0 {
+	if mc.cfg.Verbose {
 		log.Printf("Found %d file(s) to be copied", len(paths))
 	}
 
 	for _, spath := range paths {
-		suffix := spath.GetPath()
+		suffix := spath.GetFullPath()
 		x := path.Join(src, suffix)
 		y := path.Join(dst, suffix)
 
@@ -626,9 +630,9 @@ func (mc *MegaClient) Sync(src, dst string) error {
 				err = mc.Put(x, y)
 			}
 		}
-		if mc.cfg.Verbose > 0 {
+		if mc.cfg.Verbose {
 			if err == EFILE_EXISTS {
-				file := path.Join(dst, spath.GetPath())
+				file := path.Join(dst, spath.GetFullPath())
 				err = errors.New(fmt.Sprintf("%s - %s", file, EFILE_EXISTS))
 			}
 		}

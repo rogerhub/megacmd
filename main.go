@@ -33,6 +33,16 @@ const USAGE = `
 
 `
 
+const USAGE_OPTIONS = `
+	-config <file>         Config file path
+	-force                 Force hard delete or overwrite
+	-help                  Help
+	-recursive             Recursive listing
+	-skip-same-size        Enables skipping based on file size
+	-verbose               Verbose
+	-version               Version
+`
+
 const (
 	LIST   = "list"
 	GET    = "get"
@@ -48,7 +58,7 @@ func main() {
 	var (
 		help      = flag.Bool("help", false, "Help")
 		version   = flag.Bool("version", false, "Version")
-		verbose   = flag.Int("verbose", 1, "Verbose")
+		verbose   = flag.Bool("verbose", false, "Verbose")
 		config    = flag.String("conf", path.Join(usr.HomeDir, CONFIG_FILE), "Config file path")
 		recursive = flag.Bool("recursive", false, "Recursive listing")
 		force     = flag.Bool("force", false, "Force hard delete or overwrite")
@@ -60,7 +70,8 @@ func main() {
 	var Usage = func() {
 		fmt.Fprintf(os.Stderr, "Usage %s:", os.Args[0])
 		fmt.Fprintf(os.Stderr, USAGE)
-		flag.PrintDefaults()
+		fmt.Fprintf(os.Stderr, "Options:")
+		fmt.Fprintf(os.Stderr, USAGE_OPTIONS)
 	}
 
 	flag.Parse()
@@ -91,8 +102,8 @@ func main() {
 		conf.Force = true
 	}
 
-	if *verbose != 1 {
-		conf.Verbose = *verbose
+	if *verbose {
+		conf.Verbose = true
 	}
 
 	if *skipsize {
@@ -136,7 +147,11 @@ func main() {
 		}
 		if err == nil {
 			for _, p := range *paths {
-				log.Println(p)
+				if conf.Verbose {
+					log.Println(p.String())
+				} else {
+					log.Println(p.GetPath())
+				}
 			}
 		}
 	case cmd == DELETE:
