@@ -3,7 +3,7 @@ package megaclient
 import (
 	"fmt"
 	"github.com/t3rm1n4l/go-humanize"
-	"github.com/t3rm1n4l/go-mega"
+	"github.com/rogerhub/go-mega"
 	"os"
 	"path/filepath"
 	"strings"

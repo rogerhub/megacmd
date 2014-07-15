@@ -3,8 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/t3rm1n4l/go-mega"
-	"github.com/t3rm1n4l/megacmd/client"
+	"github.com/rogerhub/go-mega"
+	"github.com/rogerhub/megacmd/client"
 	"log"
 	"os"
 	"os/signal"
@@ -18,7 +18,7 @@ const (
 	CONFIG_FILE = ".megacmd.json"
 	VERSION     = "0.012"
 	AUTHOR      = "Sarath Lakshman"
-	URL         = "github.com/t3rm1n4l/megacmd"
+	URL         = "github.com/rogerhub/megacmd"
 )
 
 const USAGE = `

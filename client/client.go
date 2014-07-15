@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/t3rm1n4l/go-mega"
+	"github.com/rogerhub/go-mega"
 	"io/ioutil"
 	"log"
 	"os"
